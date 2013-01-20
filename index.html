@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="lib/css/ui-lightness/jquery-ui-1.10.0.custom.min.css" rel="stylesheet">
+	<script src="lib/js/jquery-1.9.0.min.js"></script>
+	<script src="lib/js/jquery-ui-1.10.0.custom.min.js"></script>
+	
+	<script src="js/throbber.js"></script>
+<style>
+	/* 
+		Below is for test page only; 
+	*/
+	* { margin: 0; padding: 0; font-family: consolas; }
+	canvas { border: 1px solid #c3c3c3; float: left; margin: 10px; }
+	section { border: 1px solid #c3c3c3; float: left; margin: 10px 10px 10px 0; width: 400px; min-height: 400px; }
+	article { margin: 18px; }
+	h2 { display: inline; font-size: 1em; }
+	span { float: right; }
+	input[type=checkbox] { float: right; }
+	input[type=text] { padding: 3px; text-align: right; width: 100px; float: right; }
+	.ui-slider { margin-top: 5px; }
+</style>
+<script>
+	$(function() {
+
+		// create throbber;
+		var throbber = new Throbber();
+		// append to element on the page;
+		throbber.appendTo(document.getElementById("myCanvas"));
+		// you can do options here:
+		//throbber.options.color = "#F00";
+		// start the throbber;
+		throbber.draw();
+		
+		/* 
+			Below is for test page only; 
+		*/
+		// Line count;
+		$("#sliderCount").slider({
+			value: 14,
+			min: 2,
+			max: 30,
+			step: 1,
+			create: function( event, ui ) {
+				var value = $(this).slider("option", "value");
+				$(this).prev("span").text(value);
+				throbber.options.count = value;
+			},
+			slide: function( event, ui ) {
+				var value = ui.value;
+				$(this).prev("span").text(value);
+				throbber.options.count = value;
+			}
+		}).trigger("slidechange");
+		
+		// Line width;
+		$("#sliderWidth").slider({
+			value: 20,
+			min: 0,
+			max: 100,
+			step: 1,
+			create: function( event, ui ) {
+				var value = $(this).slider("option", "value");
+				$(this).prev("span").text(value + "px");
+				throbber.options.width = value;
+			},
+			slide: function( event, ui ) {
+				var value = ui.value;
+				$(this).prev("span").text(value + "px");
+				throbber.options.width = value;
+			}
+		});
+		
+		// Line height;
+		$("#sliderHeight").slider({
+			value: 100,
+			min: 0,
+			max: 150,
+			step: 10,
+			create: function( event, ui ) {
+				var value = $(this).slider("option", "value");
+				$(this).prev("span").text(value + "px");
+				throbber.options.height = value;
+			},
+			slide: function( event, ui ) {
+				var value = ui.value;
+				$(this).prev("span").text(value + "px");
+				throbber.options.height = value;
+			}
+		});
+		
+		// Line offset;
+		$("#sliderOffset").slider({
+			value: 50,
+			min: 0,
+			max: 200,
+			step: 10,
+			create: function( event, ui ) {
+				var value = $(this).slider("option", "value");
+				$(this).prev("span").text(value + "px");
+				throbber.options.offset = value;
+			},
+			slide: function( event, ui ) {
+				var value = ui.value;
+				$(this).prev("span").text(value + "px");
+				throbber.options.offset = value;
+			}
+		});
+		
+		// Speed;
+		$("#sliderSpeed").slider({
+			value: 100,
+			min: 0,
+			max: 500,
+			step: 10,
+			create: function( event, ui ) {
+				var value = $(this).slider("option", "value");
+				$(this).prev("span").text(value + "ms");
+				throbber.options.interval = value;
+			},
+			slide: function( event, ui ) {
+				var value = ui.value;
+				$(this).prev("span").text(value + "ms");
+				throbber.options.interval = value;
+			}
+		});
+		
+		// Clockwise;
+		$("#sliderClockwise").change(function(){
+			throbber.options.clockwise = $(this).prop("checked");
+		}).triggerHandler("change");
+		
+		// Color;
+		$("#sliderColor").change(function(){
+			throbber.options.color = this.value;
+		}).triggerHandler("change");
+		
+	});
+</script>
+</head>
+<body>
+
+<h1>Throbber in Javascript</h1>
+
+<canvas id="myCanvas" width="400" height="400">
+	Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<section>
+	<article>
+		<h2>Line count</h2>
+		<span></span>
+		<div id="sliderCount"></div>
+	</article>
+	<article>
+		<h2>Line width</h2>
+		<span></span>
+		<div id="sliderWidth"></div>
+	</article>
+	<article>
+		<h2>Line height</h2>
+		<span></span>
+		<div id="sliderHeight"></div>
+	</article>
+	<article>
+		<h2>Line offset</h2>
+		<span></span>
+		<div id="sliderOffset"></div>
+	</article>
+	<article>
+		<h2>Speed</h2>
+		<span></span>
+		<div id="sliderSpeed"></div>
+	</article>
+	<article>
+		<h2>Clockwise</h2>
+		<input type="checkbox" id="sliderClockwise" checked="checked" />
+	</article>
+	<article>
+		<h2>Color</h2>
+		<input type="text" id="sliderColor" value="#F00" class="ui-state-default ui-corner-all" />
+	</article>
+</section>
+</body>
+</html>
+
+
