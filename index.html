@@ -12,7 +12,7 @@
 	*/
 	* { margin: 0; padding: 0; font-family: consolas; }
 	canvas { border: 1px solid #c3c3c3; float: left; margin: 10px; }
-	section { border: 1px solid #c3c3c3; float: left; margin: 10px 10px 10px 0; width: 400px; min-height: 400px; }
+	section, textarea { border: 1px solid #c3c3c3; float: left; margin: 10px 10px 10px 0; width: 400px; min-height: 400px; }
 	article { margin: 18px; }
 	h2 { display: inline; font-size: 1em; }
 	span { float: right; }
@@ -35,6 +35,37 @@
 		/* 
 			Below is for test page only; 
 		*/
+		
+		// Source;
+		var source = $("#source").focus(function(){ 
+			var that = $(this);
+			window.setTimeout(function(){ 
+				that.select();
+			}, 13);
+		});
+		function showSource(){
+			source.val([
+"",
+"// create throbber;",
+"var throbber = new Throbber();",
+"",
+"// append to element on the page;",
+"throbber.appendTo(",
+"    document.getElementById(\"myCanvas\"));",
+"",
+"// you can do options here:",
+"throbber.options.count     = " + throbber.options.count + ";",
+"throbber.options.width     = " + throbber.options.width + ";",
+"throbber.options.height    = " + throbber.options.height + ";",
+"throbber.options.offset    = " + throbber.options.offset + ";",
+"throbber.options.interval  = " + throbber.options.interval + ";",
+"throbber.options.clockwise = " + throbber.options.clockwise + ";",
+"throbber.options.color     = \"" + throbber.options.color + "\";",
+"",
+"// show the throbber;",
+"throbber.draw();"].join("\n"));
+		}
+
 		// Line count;
 		$("#sliderCount").slider({
 			value: 14,
@@ -45,11 +76,13 @@
 				var value = $(this).slider("option", "value");
 				$(this).prev("span").text(value);
 				throbber.options.count = value;
+				showSource();
 			},
 			slide: function( event, ui ) {
 				var value = ui.value;
 				$(this).prev("span").text(value);
 				throbber.options.count = value;
+				showSource();
 			}
 		}).trigger("slidechange");
 		
@@ -63,11 +96,13 @@
 				var value = $(this).slider("option", "value");
 				$(this).prev("span").text(value + "px");
 				throbber.options.width = value;
+				showSource();
 			},
 			slide: function( event, ui ) {
 				var value = ui.value;
 				$(this).prev("span").text(value + "px");
 				throbber.options.width = value;
+				showSource();
 			}
 		});
 		
@@ -81,11 +116,13 @@
 				var value = $(this).slider("option", "value");
 				$(this).prev("span").text(value + "px");
 				throbber.options.height = value;
+				showSource();
 			},
 			slide: function( event, ui ) {
 				var value = ui.value;
 				$(this).prev("span").text(value + "px");
 				throbber.options.height = value;
+				showSource();
 			}
 		});
 		
@@ -99,11 +136,13 @@
 				var value = $(this).slider("option", "value");
 				$(this).prev("span").text(value + "px");
 				throbber.options.offset = value;
+				showSource();
 			},
 			slide: function( event, ui ) {
 				var value = ui.value;
 				$(this).prev("span").text(value + "px");
 				throbber.options.offset = value;
+				showSource();
 			}
 		});
 		
@@ -117,22 +156,26 @@
 				var value = $(this).slider("option", "value");
 				$(this).prev("span").text(value + "ms");
 				throbber.options.interval = value;
+				showSource();
 			},
 			slide: function( event, ui ) {
 				var value = ui.value;
 				$(this).prev("span").text(value + "ms");
 				throbber.options.interval = value;
+				showSource();
 			}
 		});
 		
 		// Clockwise;
 		$("#sliderClockwise").change(function(){
 			throbber.options.clockwise = $(this).prop("checked");
+			showSource();
 		}).triggerHandler("change");
 		
 		// Color;
 		$("#sliderColor").change(function(){
 			throbber.options.color = this.value;
+			showSource();
 		}).triggerHandler("change");
 		
 	});
@@ -181,7 +224,8 @@
 		<input type="text" id="sliderColor" value="#F00" class="ui-state-default ui-corner-all" />
 	</article>
 </section>
+
+<textarea id="source"></textarea>
+
 </body>
 </html>
-
-
